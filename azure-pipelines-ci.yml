@@ -24,7 +24,7 @@ stages:
         
 - stage: Test
   displayName: Run Tests
-  dependsOn: Compile
+  dependsOn: Install_Java11
   jobs:
   - job: Test_Sources
     displayName: Test Sources
