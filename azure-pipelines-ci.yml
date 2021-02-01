@@ -39,3 +39,11 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'test'
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'JaCoCo'
+        summaryFileLocation: '**/site/jacoco/jacoco.xml'
+        #pathToSources: # Optional
+        #reportDirectory: # Optional
+        #additionalCodeCoverageFiles: # Optional
+        #failIfCoverageEmpty: false # Optional
