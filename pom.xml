@@ -48,7 +48,6 @@
 						<!-- exclude classes in package com.vobi.demo.dto-->
 						<exclude>co/com/coomeva/devops/calculadora/dto/*</exclude>
 					</excludes>
-
 				</configuration>
 				<executions>
 					<execution>
