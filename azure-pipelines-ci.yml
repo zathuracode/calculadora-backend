@@ -43,7 +43,7 @@ stages:
       inputs:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: '**/site/jacoco/jacoco.xml'
-        #pathToSources: # Optional
-        #reportDirectory: # Optional
+        reportDirectory:     '**/site/jacoco/index.html'
+        #pathToSources: # Optional       
         #additionalCodeCoverageFiles: # Optional
         #failIfCoverageEmpty: false # Optional
