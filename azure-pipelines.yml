@@ -21,93 +21,10 @@ stages:
         versionSpec: '11'
         jdkArchitectureOption: 'x64'
         jdkSourceOption: 'PreInstalled'
-        
-- stage: Clean
-  displayName: Clean
-  dependsOn: Install_Java11
-  jobs:
-  - job: Clean_Sources
-    displayName: Clean Sources
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '11'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: false
-        goals: 'clean'
- 
-- stage: Compile
-  displayName: Compile Sources
-  dependsOn: Clean
-  jobs:
-  - job: Compile
-    displayName: Compile
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '11'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: false
-        goals: 'compile -DskipTests=true'
-
-- stage: Test
-  displayName: Run Tests
-  dependsOn: Compile
-  jobs:
-  - job: Test_Sources
-    displayName: Test Sources
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '11'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        goals: 'test'
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: 'JaCoCo'
-        summaryFileLocation: '**/site/jacoco/jacoco.xml'
-        reportDirectory:     '**/site/jacoco/'
-
-- stage: Package
-  displayName: Package Sources
-  dependsOn: Test
-  jobs:
-  - job: Package
-    displayName: Package
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '11'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: false
-        goals: 'package -DskipTests=true'
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: '$(build.artifactstagingdirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        artifactName: MyBuildOutputs
 
 - stage: Heroku_Deploy
   displayName: Bash Script Config y Deploy
-  dependsOn: Package
+  dependsOn: Install_Java11
   jobs:
   - job: Heroku_Deploy
     displayName: Bash Script Config y Deploy
@@ -132,5 +49,5 @@ stages:
         targetType: 'inline'
         script: |
                   git checkout $(Build.SourceBranchName)
-                  git remote add heroku https://heroku:$(api_key)@git.heroku.com/spring-boot-azure-pipelines.git
+                  git remote add heroku https://heroku:$(api_key)@git.heroku.com/$(heroku_app).git
                   git push heroku $(Build.SourceBranchName)
