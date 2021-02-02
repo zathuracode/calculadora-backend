@@ -106,11 +106,11 @@ stages:
         artifactName: MyBuildOutputs
 
 - stage: Heroku_Deploy
-  displayName: Bash Script Config y Deploy
+  displayName: Bash Script Config y Deploy en Heroku
   dependsOn: Package
   jobs:
   - job: Heroku_Deploy
-    displayName: Bash Script Config y Deploy
+    displayName: Bash Script Config y Deploy en Heroku
     steps:
     - task: Bash@3
       displayName: 'Config Heroku CLI'
