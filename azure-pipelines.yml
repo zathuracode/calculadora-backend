@@ -24,12 +24,13 @@ stages:
 
 - stage: Heroku_Deploy
   displayName: Bash Script Config y Deploy
-  dependsOn: Install_Java11
+  dependsOn: Package
   jobs:
   - job: Heroku_Deploy
     displayName: Bash Script Config y Deploy
     steps:
     - task: Bash@3
+      displayName: 'Config Heroku CLI'
       inputs:
         targetType: 'inline'
         script: |
@@ -45,6 +46,7 @@ stages:
                  tail ~/.netrc
                  heroku apps
     - task: Bash@3
+      displayName: 'Deploy'
       inputs:
         targetType: 'inline'
         script: |
