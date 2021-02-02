@@ -104,3 +104,33 @@ stages:
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         artifactName: MyBuildOutputs
+
+- stage: Heroku_Deploy
+  displayName: Bash Script Config y Deploy
+  dependsOn: Package
+  jobs:
+  - job: Heroku_Deploy
+    displayName: Bash Script Config y Deploy
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+                 cat >~/.netrc <<EOF
+                     machine api.heroku.com
+                       login $(heroku_email)
+                       password $(api_key)
+                     machine git.heroku.com
+                       login $(heroku_email)
+                       password $(api_key)
+                 EOF
+                 chmod 600 ~/.netrc
+                 tail ~/.netrc
+                 heroku apps
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+                  git checkout $(Build.SourceBranchName)
+                  git remote add heroku https://heroku:$(api_key)@git.heroku.com/spring-boot-azure-pipelines.git
+                  git push heroku $(Build.SourceBranchName)
