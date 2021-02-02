@@ -24,7 +24,7 @@ stages:
 
 - stage: Heroku_Deploy
   displayName: Bash Script Config y Deploy
-  dependsOn: Package
+  dependsOn: Install_Java11
   jobs:
   - job: Heroku_Deploy
     displayName: Bash Script Config y Deploy
