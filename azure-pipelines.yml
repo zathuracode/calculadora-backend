@@ -38,3 +38,20 @@ stages:
         jdkArchitectureOption: 'x64'
         publishJUnitResults: false
         goals: 'clean'
+
+- stage: Compile
+  displayName: Compile Sources
+  dependsOn: Clean
+  jobs:
+  - job: Compile
+    displayName: Compile
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '11'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: false
+        goals: 'compile -DskipTests=true'
