@@ -15,7 +15,7 @@ class OperacionesMatematicasServiceTest {
 	@Test
 	public void debeSumarDosNumeros()throws Exception {
 		//Arrange
-		Integer n1=4;
+		Integer n1=6;
 		Integer n2=4;
 		Integer resultado=0;
 		
