@@ -17,13 +17,14 @@ class OperacionesMatematicasServiceTest {
 		//Arrange
 		Integer n1=6;
 		Integer n2=4;
+		Integer expected=6;
 		Integer resultado=0;
 		
 		//Act
 		resultado=operacionesMatematicasService.sumar(n1, n2);
 		
 		//Assert		
-		assertEquals(6, resultado);
+		assertEquals(expected, resultado);
 		
 	}
 	
