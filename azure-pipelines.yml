@@ -58,7 +58,7 @@ stages:
         
 - stage: Test
   displayName: Run Tests
-  dependsOn: Compile
+ # dependsOn: Compile
   jobs:
   - job: Test_Sources
     displayName: Test Sources
@@ -107,7 +107,7 @@ stages:
       
 - stage: Heroku_Deploy
   displayName: Bash Script Config y Deploy en Heroku
-  dependsOn: Package
+  dependsOn: Test
   jobs:
   - job: Heroku_Deploy
     displayName: Bash Script Config y Deploy en Heroku
