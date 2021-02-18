@@ -18,4 +18,18 @@ public class OperacionesMatematicasServiceImpl implements OperacionesMatematicas
     	return n1+n2;
 	}
 
+	@Override
+	public Integer restar(Integer n1, Integer n2) throws Exception {
+		
+		if(n1==null) {
+    		throw new Exception("El n1 es nulo");
+    	}
+    	
+    	if(n2==null) {
+    		throw new Exception("El n2 es nulo");
+    	}
+    	
+    	return n1-n2;
+	}
+
 }

@@ -17,7 +17,7 @@ class OperacionesMatematicasServiceTest {
 		//Arrange
 		Integer n1=6;
 		Integer n2=4;
-		Integer expected=6;
+		Integer expected=10;
 		Integer resultado=0;
 		
 		//Act
@@ -29,7 +29,6 @@ class OperacionesMatematicasServiceTest {
 	}
 	
 	@Test
-	
 	public void debeLanzarExceptionNumeroUno() {
 		//Arrange
 		Integer n1=null;
@@ -67,6 +66,22 @@ class OperacionesMatematicasServiceTest {
 		//Assert		
 		assertTrue(actualMessage.contains(expectedMessage));
 
+	}
+	
+	@Test
+	public void debeRestarDosNumeros()throws Exception {
+		//Arrange
+		Integer n1=6;
+		Integer n2=4;
+		Integer expected=2;
+		Integer resultado=0;
+		
+		//Act
+		resultado=operacionesMatematicasService.restar(n1, n2);
+		
+		//Assert		
+		assertEquals(expected, resultado);
+		
 	}
 
 }
