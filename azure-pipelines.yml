@@ -77,4 +77,30 @@ stages:
       inputs:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: '**/site/jacoco/jacoco.xml'
-        reportDirectory:     '**/site/jacoco/*'
+        reportDirectory:     '**/site/jacoco/'
+
+- stage: Package
+  displayName: Package Sources
+  dependsOn: Test
+  jobs:
+  - job: Package
+    displayName: Package
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '11'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: false
+        goals: 'package -DskipTests=true'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        artifactName: MyBuildOutputs
